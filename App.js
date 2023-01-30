@@ -31,10 +31,10 @@ export default function App() {
       </View>
 
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{
-          position: 'absolute',
-          bottom: 60,
+          // position: 'absolute',
+          // bottom: 60,
           width: '100%',
           flexDirection: 'row',
           justifyContent: 'space-around',
