@@ -5,13 +5,28 @@ import {
   Platform,
   TouchableOpacity,
   TextInput,
+  Keyboard,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Task from './Components/Task';
 
 export default function App() {
+  const [task, setTask] = useState();
+  const [taskItems, setTaskItems] = useState([]);
+
+  const handleTask = () => {
+    Keyboard.dismiss();
+    setTaskItems([...taskItems, task]);
+    setTask(null);
+  };
+
+  const completTask = index => {
+    let itemsCopy = [...taskItems];
+    itemsCopy.splice(index, 1);
+    setTaskItems(itemsCopy);
+  };
   return (
-    <View style={{backgroundColor: '#e4e6e9', padding: 20}}>
+    <View style={{flex: 1, backgroundColor: '#e4e6e9', padding: 20}}>
       <Text
         style={{
           color: '#000',
@@ -23,18 +38,20 @@ export default function App() {
         Today's tasks
       </Text>
       <View>
-        <Task text="1" />
-        <Task text="2" />
-        <Task text="3" />
-        <Task text="4" />
-        <Task text="5" />
+        {taskItems.map((item, index) => {
+          return (
+            <TouchableOpacity key={index} onPress={() => completTask(index)}>
+              <Task text={item} />
+            </TouchableOpacity>
+          );
+        })}
       </View>
 
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{
-          // position: 'absolute',
-          // bottom: 60,
+          position: 'absolute',
+          bottom: 60,
           width: '100%',
           flexDirection: 'row',
           justifyContent: 'space-around',
@@ -51,8 +68,10 @@ export default function App() {
             width: 250,
           }}
           placeholder={'Write a task'}
+          value={task}
+          onChangeText={text => setTask(text)}
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleTask()}>
           <View
             style={{
               width: 60,
