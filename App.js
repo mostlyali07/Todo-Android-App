@@ -83,7 +83,12 @@ export default function App() {
               borderColor: '#c0c0c0',
               borderWidth: 1,
             }}>
-            <Text style={{}}>+</Text>
+            <Text
+              style={{
+                color: '#000',
+              }}>
+              +
+            </Text>
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
